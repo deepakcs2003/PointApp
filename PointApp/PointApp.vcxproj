@@ -100,7 +100,9 @@ glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
   <ItemGroup>
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="ColorBar.cpp" />
+    <ClCompile Include="Cone.cpp" />
     <ClCompile Include="Cuboid.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="ToolBox.cpp" />
     <QtRcc Include="PointApp.qrc" />
@@ -118,6 +120,10 @@ glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Sphere.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Cone.h" />
+    <QtMoc Include="Plane.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

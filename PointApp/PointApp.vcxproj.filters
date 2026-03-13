@@ -52,6 +52,12 @@
     <ClCompile Include="Sphere.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Cone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ToolBox.h">
@@ -67,6 +73,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Sphere.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Plane.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Cone.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
