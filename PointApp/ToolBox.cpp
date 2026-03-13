@@ -69,40 +69,14 @@ void ToolBox::createTools()
         layout->addWidget(btn, 0, Qt::AlignHCenter);
     };
 
-    auto makeSeparator = [&]() {
-        QFrame* line1 = new QFrame;
-        line1->setFrameShape(QFrame::HLine);
-        line1->setFixedWidth(50);
-        line1->setStyleSheet("color: #2a3550;");
-        layout->addWidget(line1, 0, Qt::AlignHCenter);
-    };
-
     // Add group 1
     for (auto& t : group1) makeButton(t);    
-    makeSeparator();
     // Add group 2
     for (auto& t : group2) makeButton(t);
-
-    makeSeparator();
     // Add group 3
     for (auto& t : group3) makeButton(t);
 
     layout->addStretch();
     setLayout(layout);
 
-    //// Styling
-    setStyleSheet(R"(
-    QWidget { background-color: #333336; }
-    QToolButton {
-        background-color: #2a2a2d;
-        color: #a0a0a8;
-        border: 1px solid #3a3a3d;
-        border-radius: 6px;
-        font-size: 8px;
-        font-weight: bold;
-    }
-    QToolButton:hover { background-color: #3a3a3d; color: #ffffff; }
-    QToolButton:checked { background-color: #1a1a1d; color: #00cfff; border: 1px solid #00cfff; }
-    )");
-    
 }
