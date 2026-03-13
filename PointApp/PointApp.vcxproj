@@ -36,7 +36,7 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.11.0_msvc2022_64</QtInstall>
+    <QtInstall>Qt6.10.2_msvc2022</QtInstall>
     <QtModules>core;gui;widgets;3dcore;3danimation;3dextras;3dinput;3dlogic;3drender;opengl;openglwidgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
@@ -101,8 +101,10 @@ glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="ColorBar.cpp" />
     <ClCompile Include="Cuboid.cpp" />
+    <ClCompile Include="Cylinder.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="ToolBox.cpp" />
+    <ClCompile Include="Torus.cpp" />
     <QtRcc Include="PointApp.qrc" />
     <QtMoc Include="PointApp.h" />
     <ClCompile Include="PointApp.cpp" />
@@ -118,6 +120,12 @@ glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Sphere.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Torus.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Cylinder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
