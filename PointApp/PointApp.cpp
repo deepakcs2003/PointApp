@@ -160,7 +160,7 @@ void PointApp::createMenu()
     help->addAction("Documentation");
     help->addAction("Tutorials");
     help->addAction("About");
-    //menuBar()->addMenu("Help");
+ 
 
 }
 
