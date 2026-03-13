@@ -53,6 +53,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PropertyPanel.cpp">
+    <ClCompile Include="Cone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,6 +77,10 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="PropertyPanel.h">
+    <QtMoc Include="Plane.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Cone.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

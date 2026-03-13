@@ -11,5 +11,15 @@
         <file>icons/rectangle.svg</file>
         <file>icons/select.svg</file>
         <file>icons/text.svg</file>
+        <file>icons/move.svg</file>
+        <file>icons/rot.svg</file>
+        <file>icons/cuboid.svg</file>
+        <file>icons/scale.svg</file>
+        <file>icons/cone.svg</file>
+        <file>icons/cyl.svg</file>
+        <file>icons/del.svg</file>
+        <file>icons/grp.svg</file>
+        <file>icons/sphere.svg</file>
+        <file>icons/lock.svg</file>
     </qresource>
 </RCC>
