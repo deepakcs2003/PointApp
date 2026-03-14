@@ -2,7 +2,7 @@
 #include <Sphere.h>
 #include <QWidget>
 #include <Cuboid.h>
-
+#include <PropertyPanel.h>
 #include <Qt3DExtras/qt3dwindow.h>
 
 class Canvas : public QWidget
@@ -15,6 +15,7 @@ public:
 
 public slots:
     void showTool(QString tool);
+    void setPropertyPanel(PropertyPanel* panel);
 
 private:
 
@@ -25,5 +26,6 @@ private:
 
     Cuboid* cuboid;
     Sphere* sphere;
+    PropertyPanel* propertyPanel;
 };
 

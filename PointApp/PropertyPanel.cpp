@@ -20,6 +20,15 @@ PropertyPanel::PropertyPanel(QWidget* parent) : QWidget(parent) {
     RposY = new QDoubleSpinBox();
     RposZ = new QDoubleSpinBox();
 
+    posX->setRange(-1000.0, 1000.0);
+    posY->setRange(-1000.0, 1000.0);
+    posZ->setRange(-1000.0, 1000.0);
+    scaleBox->setRange(-1000.0, 1000.0); 
+    RposX->setRange(-360.0, 360.0);
+    RposY->setRange(-360.0, 360.0);
+    RposZ->setRange(-360.0, 360.0);
+
+
     surfaceAreaField = new QLineEdit("0.0");
     surfaceAreaField->setReadOnly(true);
     volumeField = new QLineEdit("0.0");
@@ -64,15 +73,71 @@ PropertyPanel::PropertyPanel(QWidget* parent) : QWidget(parent) {
 }
 
 void PropertyPanel::updateName(QString name) {
-    titleLabel->setText("<b>Active: " + name + "</b>");
-    calculateSurfaceArea();
-    calculateVolume();
-}
-
-void PropertyPanel::calculateSurfaceArea() {
    
+    if (name == "Cuboid" || name == "Sphere" ||
+        name == "Rectangle" || name == "Cyl"||name=="Line")
+    {
+        titleLabel->setText("<b>Active: " + name + "</b>");
+    }
+    //calculateSurfaceArea();
+    //calculateVolume();
 }
 
-void PropertyPanel::calculateVolume() {
-    
+
+
+void PropertyPanel::setValue(QString shape, float x, float y, float z, float p1)
+{
+    posX->setValue(x);
+    posY->setValue(y);
+    posZ->setValue(z);
+
+    if (shape == "Cuboid")
+    {
+        scaleBox->setValue(p1);      
+        scaleBox->setSuffix(" (Scale)");
+    }
+    else if (shape == "Sphere")
+    {
+        scaleBox->setValue(p1);     
+        scaleBox->setSuffix(" (Radius)");
+    }
+    else if (shape == "Cylinder")
+    {
+        scaleBox->setValue(p1);     
+    }
+
+    calculateSurfaceArea(shape, x, y, z, p1);
+    calculateVolume(shape, x, y, z, p1);
+}   
+
+void PropertyPanel::calculateSurfaceArea(QString shape, float x, float y, float z, float p1)
+{
+    double area = 0.0;
+    if (shape == "Cuboid") {
+        area = 2.0 * (x * y + y * z + x * z); 
+    }
+    else if (shape == "Sphere") {
+        area = 4.0 * M_PI * p1 * p1; 
+    }
+    else if (shape == "Cylinder") {
+        area = 2.0 * M_PI * p1 * (p1 + z);
+    }
+
+    surfaceAreaField->setText(QString::number(area, 'f', 2));
+}
+
+void PropertyPanel::calculateVolume(QString shape, float x, float y, float z, float p1)
+{
+    double volume = 0.0;
+    if (shape == "Cuboid") {
+        volume = x * y * z;
+    }
+    else if (shape == "Sphere") {
+        volume = (4.0 / 3.0) * M_PI * p1 * p1 * p1;
+    }
+    else if (shape == "Cylinder") {
+        volume = M_PI * p1 * p1 * z; 
+    }
+
+    volumeField->setText(QString::number(volume, 'f', 2));
 }

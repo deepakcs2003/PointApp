@@ -26,7 +26,8 @@ public:
 
 public slots:
     void updateName(QString name); 
-    void calculateSurfaceArea();
-    void calculateVolume();
+    void calculateSurfaceArea(QString shape, float x, float y, float z, float p1);
+    void calculateVolume(QString shape, float x, float y, float z, float p1);
+    void setValue(QString,float, float, float, float);
 
 };
