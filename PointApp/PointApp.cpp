@@ -181,6 +181,7 @@ void PointApp::createLayout()
     workspaceLayout->addWidget(toolBox);
     workspaceLayout->addWidget(canvas);
     workspaceLayout->addWidget(propertyPanel);
+    canvas->setPropertyPanel(propertyPanel);
     colorBar = new ColorBar;
 
     mainLayout->addLayout(workspaceLayout);

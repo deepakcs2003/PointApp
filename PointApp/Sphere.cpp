@@ -5,9 +5,10 @@
 #include <QtGui/QQuaternion>
 
 #include <QtCore/QDebug>
+#include<PropertyPanel.h>
 
 
-Sphere::Sphere(Qt3DCore::QEntity* rootEntity):m_rootEntity(rootEntity)
+Sphere::Sphere(Qt3DCore::QEntity* rootEntity,PropertyPanel*panel):m_rootEntity(rootEntity), p(panel)
 {
     // Sphere shape data
     Qt3DExtras::QSphereMesh* sphereMesh = new Qt3DExtras::QSphereMesh();
@@ -30,7 +31,11 @@ Sphere::Sphere(Qt3DCore::QEntity* rootEntity):m_rootEntity(rootEntity)
     m_sphereEntity->addComponent(sphereMesh);
     m_sphereEntity->addComponent(sphereMaterial);
     m_sphereEntity->addComponent(sphereTransform);
-    
+
+    if (p)
+    {
+        p->setValue("Sphere", -5.0f, -4.0f, 0.0f, 2.0f);
+    }
 }
 
 Sphere::~Sphere()

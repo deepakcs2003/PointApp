@@ -6,7 +6,7 @@
 #include <Qt3DRender/QCamera>
 #include <Qt3DExtras/qfirstpersoncameracontroller.h>
 #include <QPainter>
-
+#include<PropertyPanel.h>
 
 
 Canvas::Canvas(QWidget* parent) : QWidget(parent)
@@ -33,6 +33,7 @@ Canvas::Canvas(QWidget* parent) : QWidget(parent)
 
     // cuboid initially null
     cuboid = nullptr;
+    propertyPanel = nullptr;
 
 
     // Camera
@@ -59,6 +60,10 @@ Canvas::~Canvas()
 {
 }
 
+void Canvas::setPropertyPanel(PropertyPanel* panel)
+{
+    propertyPanel = panel;
+}
 
 
 void Canvas::showTool(QString tool)
@@ -67,14 +72,16 @@ void Canvas::showTool(QString tool)
     {
         if (!cuboid)
         {
-            cuboid = new Cuboid(rootEntity);
+            cuboid = new Cuboid(rootEntity, propertyPanel);
+          
         }
 
         cuboid->enableCuboid(true);
+        
     }
     else if (tool == "Sphere") {
         if (!sphere) {
-            sphere = new Sphere(rootEntity);
+            sphere = new Sphere(rootEntity, propertyPanel);
         }
         sphere->enableSphere(true);
     }
