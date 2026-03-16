@@ -11,6 +11,8 @@ class Canvas : public QWidget
 public:
     Canvas(QWidget* parent = nullptr);
     ~Canvas();
+    static int id;
+    BaseShape* getObject(QString obj);
 
 public slots:
     void onToolSelected( QString toolName);

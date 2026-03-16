@@ -2,7 +2,9 @@
 #include <QFormLayout>
 #include <QtMath>
 
-PropertyPanel::PropertyPanel(QWidget* parent) : QWidget(parent) {
+int PropertyPanel::id = 1;
+
+PropertyPanel::PropertyPanel(Canvas* c,QWidget* parent) : canvas(c), QWidget(parent) {
     QFormLayout* form = new QFormLayout(this);
     form->setVerticalSpacing(8);
 
@@ -118,35 +120,26 @@ void PropertyPanel::onShapeAdded(BaseShape* shape)
 {
     if (!shape) return;
 
-    QString shapeName = shape->shapeName();
+    QString shapeName = shape->shapeName()+QString::number(id++);
     
-    if (shapeMap.contains(shapeName))
-    {
-        shapeMap[shapeName] = shape;
-    }
-    else
-    {
-        shapeMap[shapeName] = shape;
-        shapeList->addItem(shapeName);
-    }
+	shapeList->addItem(shapeName);
     
-    loadShape(shape);
+    loadShape(shape,shapeName);
 }
 
-void PropertyPanel::loadShape(BaseShape* shape)
+void PropertyPanel::loadShape(BaseShape* shape,QString name)
 {
     if (!shape) return;
 
     currentShape = shape;
 
-    QString name = shape->shapeName();
 
     titleLabel->setText("Active: " + name);
 
-    // if (shapeList->findItems(name, Qt::MatchExactly).isEmpty())
-    // {
-    //     shapeList->addItem(name);
-    // }
+     if (shapeList->findItems(name, Qt::MatchExactly).isEmpty())
+     {
+         shapeList->addItem(name);
+     }
 
     posX->setValue(shape->position().x());
     posY->setValue(shape->position().y());
@@ -170,10 +163,11 @@ void PropertyPanel::onShapeListItemSelected(QListWidgetItem* item)
     QString selectedName = item->text();
     
     // Retrieve shape pointer from map
-    if (shapeMap.contains(selectedName))
+    BaseShape* shape = canvas->getObject(selectedName);
+
+    if (shape)
     {
-        BaseShape* shape = shapeMap[selectedName];
-        loadShape(shape);
+        loadShape(shape, selectedName);
     }
 }
 

@@ -33,8 +33,8 @@ QString Cylinder::shapeName() const
     return "Cylinder";
 }
 
-void Cylinder::enableCylinder(bool enabled)
-{
-    if (m_entity)
-        m_entity->setEnabled(enabled);
-}
+//void Cylinder::enableCylinder(bool enabled)
+//{
+//    if (m_entity)
+//        m_entity->setEnabled(enabled);
+//}

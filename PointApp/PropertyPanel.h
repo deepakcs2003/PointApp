@@ -8,15 +8,18 @@
 #include <QListWidget>
 #include <QMap>
 #include "BaseShape.h"
+#include <Canvas.h>
+
 
 class PropertyPanel : public QWidget {
     Q_OBJECT
 
 public:
-    explicit PropertyPanel(QWidget* parent = nullptr);
+    PropertyPanel(Canvas* c,QWidget* parent = nullptr);
+	static int id; 
 
 public slots:
-    void loadShape(BaseShape* shape);
+    void loadShape(BaseShape* shape,QString shapeName);
     void onShapeAdded(BaseShape* shape);
 
 private slots:
@@ -38,7 +41,6 @@ private slots:
   
 private:
     BaseShape* currentShape = nullptr;
-    QMap<QString, BaseShape*> shapeMap;  // Map to store shape pointers by name
     int shapeCounter = 0;  // Counter to make unique shape identifiers
 
     QLabel* titleLabel;
@@ -63,4 +65,5 @@ private:
 
     QListWidget* shapeList;
 
+    Canvas* canvas;
 };

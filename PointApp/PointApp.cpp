@@ -175,7 +175,7 @@ void PointApp::createLayout()
 
     toolBox = new ToolBox;
     canvas = new Canvas;
-    propertyPanel = new PropertyPanel;
+    propertyPanel = new PropertyPanel(canvas);
 
     workspaceLayout->addWidget(toolBox);
     workspaceLayout->addWidget(canvas, 1);
