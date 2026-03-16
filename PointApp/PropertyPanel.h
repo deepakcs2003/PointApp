@@ -30,7 +30,7 @@ private slots:
 
     void onColorChanged(const QString& colorName);
     void onVisibilityToggled(bool checked);
-
+    void  updateMeasurements();
 private:
     BaseShape* currentShape = nullptr;
 

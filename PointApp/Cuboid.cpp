@@ -6,22 +6,29 @@
 
 #include <QtCore/QDebug>
 
-Cuboid::Cuboid(Qt3DCore::QEntity* rootEntity) :m_rootEntity(rootEntity)
+Cuboid::Cuboid(Qt3DCore::QEntity* rootEntity) :BaseShape(rootEntity)
 {
-    Qt3DExtras::QCuboidMesh* cuboid = new Qt3DExtras::QCuboidMesh();
+    Qt3DExtras::QCuboidMesh* cubeMesh = new Qt3DExtras::QCuboidMesh();
 
-    Qt3DCore::QTransform* cuboidTransform = new Qt3DCore::QTransform();
-    cuboidTransform->setScale(4.0f);
-    cuboidTransform->setTranslation(QVector3D(5.0f, -4.0f, 0.0f));
+    cubeMesh->setXExtent(3);
+    cubeMesh->setYExtent(3);
+    cubeMesh->setZExtent(3);
 
-    Qt3DExtras::QPhongMaterial* cuboidMaterial = new Qt3DExtras::QPhongMaterial();
-    cuboidMaterial->setDiffuse(QColor(QRgb(0x665423)));
+    // Transform
+    m_transform = new Qt3DCore::QTransform();
+    m_transform->setScale(1.0f);
+    m_transform->setTranslation(QVector3D(0, 0, 0));
 
-   
-    m_cuboidEntity = new Qt3DCore::QEntity(m_rootEntity);
-    m_cuboidEntity->addComponent(cuboid);
-    m_cuboidEntity->addComponent(cuboidMaterial);
-    m_cuboidEntity->addComponent(cuboidTransform);
+    // Material
+    m_material = new Qt3DExtras::QPhongMaterial();
+    m_material->setDiffuse(QColor(QRgb(0x928327)));
+
+    // Entity
+    m_entity = new Qt3DCore::QEntity(m_rootEntity);
+
+    m_entity->addComponent(cubeMesh);
+    m_entity->addComponent(m_transform);
+    m_entity->addComponent(m_material);
     
 }
 
@@ -30,5 +37,11 @@ Cuboid::~Cuboid()
 }
 void Cuboid::enableCuboid(bool enabled)
 {
-    m_cuboidEntity->setEnabled(enabled);
+    if (m_entity)
+        m_entity->setEnabled(enabled);
+}
+
+QString Cuboid::shapeName() const
+{
+    return "Cuboid";
 }

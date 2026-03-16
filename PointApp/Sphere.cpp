@@ -19,7 +19,8 @@ Sphere::Sphere(Qt3DCore::QEntity* rootEntity):BaseShape(rootEntity)
     m_transform= new Qt3DCore::QTransform();
 
     m_transform->setScale(1.3f);
-    m_transform->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
+    m_transform->setTranslation(QVector3D(0.0f, 4.0f, 0.0f));
+
     //m_transform->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(0, 1, 0), 45));
 
     // Sphere mesh Material

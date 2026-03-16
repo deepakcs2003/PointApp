@@ -1,45 +1,39 @@
 #include "Cone.h"
+#include <QColor>
 
-#include <Qt3DRender/QGeometryRenderer>
-
-#include <QtGui/QQuaternion>
-
-#include <QtCore/QDebug>
-
-Cone::Cone(Qt3DCore::QEntity* rootEntity) :m_rootEntity(rootEntity)
+Cone::Cone(Qt3DCore::QEntity* rootEntity) : BaseShape(rootEntity)
 {
-    // Cone shape data
-    Qt3DExtras::QConeMesh* cone = new Qt3DExtras::QConeMesh();
-    cone->setTopRadius(0.5);
-    cone->setBottomRadius(1);
-    cone->setLength(3);
-    cone->setRings(50);
-    cone->setSlices(20);
+    Qt3DExtras::QConeMesh* coneMesh = new Qt3DExtras::QConeMesh();
+    coneMesh->setTopRadius(0.01f);   
+    coneMesh->setBottomRadius(1.5f);
+    coneMesh->setLength(4.0f);
+    coneMesh->setRings(50);
+    coneMesh->setSlices(20);
 
-    // ConeMesh Transform
-    Qt3DCore::QTransform* coneTransform = new Qt3DCore::QTransform();
-    coneTransform->setScale(1.5f);
-    coneTransform->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(1.0f, 0.0f, 0.0f), 45.0f));
-    coneTransform->setTranslation(QVector3D(0.0f, 4.0f, -1.5));
+    m_transform = new Qt3DCore::QTransform();
+    m_transform->setScale(1.0f);
+    m_transform->setTranslation(QVector3D(6.0f, 0.0f, 0.0f));
 
-    Qt3DExtras::QPhongMaterial* coneMaterial = new Qt3DExtras::QPhongMaterial();
-    coneMaterial->setDiffuse(QColor(QRgb(0x928327)));
+    m_material = new Qt3DExtras::QPhongMaterial();
+    m_material->setDiffuse(QColor(200, 120, 40));
 
-    // Cone
-    {
-        m_coneEntity = new Qt3DCore::QEntity(m_rootEntity);
-        m_coneEntity->addComponent(cone);
-        m_coneEntity->addComponent(coneMaterial);
-        m_coneEntity->addComponent(coneTransform);
-    }
+    m_entity = new Qt3DCore::QEntity(rootEntity);
+    m_entity->addComponent(coneMesh);
+    m_entity->addComponent(m_transform);
+    m_entity->addComponent(m_material);
 }
 
 Cone::~Cone()
 {
 }
 
-
-void Cone::enableCone(bool enabled) {
-    m_coneEntity->setEnabled(true);
+QString Cone::shapeName() const
+{
+    return "Cone";
 }
 
+void Cone::enableCone(bool enabled)
+{
+    if (m_entity)
+        m_entity->setEnabled(enabled);
+}

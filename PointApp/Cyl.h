@@ -3,19 +3,19 @@
 #include <QObject>
 #include <Qt3DCore/QTransform>
 #include <Qt3DCore/QEntity>
-#include <Qt3DExtras/QConeMesh>
+#include <Qt3DExtras/QCylinderMesh>
 #include <Qt3DExtras/QPhongMaterial>
 #include "BaseShape.h"
 
-class Cone : public BaseShape
+class Cylinder : public BaseShape
 {
     Q_OBJECT
 public:
-    Cone(Qt3DCore::QEntity* rootEntity);
-    ~Cone();
+    Cylinder(Qt3DCore::QEntity* rootEntity);
+    ~Cylinder();
 
     QString shapeName() const override;
 
 public slots:
-    void enableCone(bool enabled);
+    void enableCylinder(bool enabled);
 };

@@ -30,10 +30,7 @@
       <Filter>Canvas</Filter>
     </ClCompile>
     <ClCompile Include="BaseShape.cpp" />
-    <ClCompile Include="Cylinder.cpp">
-      <Filter>Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="Torus.cpp">
+    <ClCompile Include="Cyl.cpp">
       <Filter>Shapes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -66,10 +63,7 @@
       <Filter>Canvas</Filter>
     </QtMoc>
     <QtMoc Include="BaseShape.h" />
-    <QtMoc Include="Cylinder.h">
-      <Filter>Shapes</Filter>
-    </QtMoc>
-    <QtMoc Include="Torus.h">
+    <QtMoc Include="Cyl.h">
       <Filter>Shapes</Filter>
     </QtMoc>
   </ItemGroup>

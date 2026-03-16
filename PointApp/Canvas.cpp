@@ -9,8 +9,9 @@
 #include <Qt3DRender/QCamera>
 #include <Qt3DExtras/qfirstpersoncameracontroller.h>
 #include <QPainter>
-
-
+#include <Sphere.h>
+#include "Cone.h"
+#include "Cyl.h"
 
 Canvas::Canvas(QWidget* parent) : QWidget(parent)
 {
@@ -75,7 +76,17 @@ void Canvas::onToolSelected(QString toolName)
     if (toolName == "Sphere") {
         newShape = new Sphere(rootEntity);
     }
-
+    if (toolName == "Cuboid")
+    {
+        newShape = new Cuboid(rootEntity);
+    }
+    if (toolName == "Cone") {
+        newShape = new Cone(rootEntity);
+    }
+    if (toolName == "Cyl")
+    {
+        newShape = new Cylinder(rootEntity);
+    }
     if (newShape) {
         shapes[toolName] = newShape;
         emit shapeAdded(newShape);

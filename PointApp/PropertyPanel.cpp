@@ -94,6 +94,18 @@ PropertyPanel::PropertyPanel(QWidget* parent) : QWidget(parent) {
     connect(visibleBtn, &QPushButton::toggled,
         this, &PropertyPanel::onVisibilityToggled);
 
+    connect(posX, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+        this, &PropertyPanel::updateMeasurements);
+
+    connect(posY, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+        this, &PropertyPanel::updateMeasurements);
+
+    connect(posZ, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+        this, &PropertyPanel::updateMeasurements);
+
+    connect(scaleBox, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+        this, &PropertyPanel::updateMeasurements);
+
 }
 
 void PropertyPanel::loadShape(BaseShape* shape)
@@ -120,6 +132,49 @@ void PropertyPanel::loadShape(BaseShape* shape)
     RposX->setValue(shape->rotX());
     RposY->setValue(shape->rotY());
     RposZ->setValue(shape->rotZ());
+    updateMeasurements();
+}
+
+
+void PropertyPanel::updateMeasurements()
+{
+    if (!currentShape) return;
+
+    float area = 0.0f;
+    float volume = 0.0f;
+    float pi = 3.1416f;
+    float scale = scaleBox->value(); // take scale input from form
+
+    QString name = currentShape->shapeName();
+
+    if (name == "Cone") {
+        float r = 1.5f * scale;
+        float h = 4.0f * scale;
+        float l = sqrt(r * r + h * h);
+        area = pi * r * (r + l);
+        volume = (pi * r * r * h) / 3.0f;
+    }
+    else if (name == "Cylinder") {
+        float r = 1.0f * scale;
+        float h = 4.0f * scale;
+        area = 2 * pi * r * (r + h);
+        volume = pi * r * r * h;
+    }
+    else if (name == "Sphere") {
+        float r = 1.5f * scale;
+        area = 4 * pi * r * r;
+        volume = (4.0f / 3.0f) * pi * r * r * r;
+    }
+    else if (name == "Cuboid") {
+        float l = 2.0f * scale;
+        float w = 3.0f * scale;
+        float h = 4.0f * scale;
+        area = 2 * (l * w + l * h + w * h);
+        volume = l * w * h;
+    }
+
+    surfaceAreaField->setText(QString::number(area, 'f', 2));
+    volumeField->setText(QString::number(volume, 'f', 2));
 }
 
 void PropertyPanel::onPosXChanged(double v)
@@ -175,3 +230,4 @@ void PropertyPanel::onVisibilityToggled(bool checked)
     if (currentShape)
         currentShape->setVisible(checked);
 }
+
