@@ -18,14 +18,21 @@ PropertyPanel::PropertyPanel(QWidget* parent) : QWidget(parent) {
 
 
     scaleBox = new QDoubleSpinBox();
+    scaleBox->setRange(0.01, 9999.0);
 
     posX = new QDoubleSpinBox();
+    posX->setRange(-9999.0, 9999.0);
     posY = new QDoubleSpinBox();
+    posY->setRange(-9999.0, 9999.0);
     posZ = new QDoubleSpinBox();
+    posZ->setRange(-9999.0, 9999.0);
 
     RposX = new QDoubleSpinBox();
+    RposX->setRange(-9999.0, 9999.0);
     RposY = new QDoubleSpinBox();
+    RposY->setRange(-9999.0, 9999.0);
     RposZ = new QDoubleSpinBox();
+    RposZ->setRange(-9999.0, 9999.0);
 
     surfaceAreaField = new QLineEdit("0.0");
     surfaceAreaField->setReadOnly(true);

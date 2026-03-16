@@ -1,4 +1,5 @@
 #include "Canvas.h"
+#include <QMouseEvent>
 #include <QVBoxLayout>
 #include <QScreen>
 #include <Cuboid.h>
@@ -26,7 +27,7 @@ Canvas::Canvas(QWidget* parent) : QWidget(parent)
 
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
-    layout->addWidget(container, 1);      
+    layout->addWidget(container, 1);
 
 
     setLayout(layout);
@@ -52,10 +53,10 @@ Canvas::Canvas(QWidget* parent) : QWidget(parent)
     camera->setViewCenter(QVector3D(0, 0, 0));
 
     // camera controller
-    Qt3DExtras::QFirstPersonCameraController* camController =
-        new Qt3DExtras::QFirstPersonCameraController(rootEntity);
+    m_camController = new Qt3DExtras::QFirstPersonCameraController(rootEntity);
 
-    camController->setCamera(camera);
+    m_camController->setCamera(camera);
+    view->installEventFilter(this);
 }
 
 Canvas::~Canvas()
@@ -66,12 +67,23 @@ Canvas::~Canvas()
 
 void Canvas::onToolSelected(QString toolName)
 {
+    m_activeTool = toolName;
+
+    if (toolName == "Move" || toolName == "Rot" || toolName == "Scale") {
+        if (m_camController) m_camController->setEnabled(false);
+        return;
+    }
+    else {
+        if (m_camController) m_camController->setEnabled(true);
+    }
+
     if (shapes.contains(toolName)) {
         BaseShape* existing = shapes[toolName];
         existing->setVisible(true);
+        m_activeShape = existing;
         emit shapeAdded(existing);
         return;
-   }
+    }
     BaseShape* newShape = nullptr;
     if (toolName == "Sphere") {
         newShape = new Sphere(rootEntity);
@@ -89,8 +101,50 @@ void Canvas::onToolSelected(QString toolName)
     }
     if (newShape) {
         shapes[toolName] = newShape;
+        m_activeShape = newShape;
         emit shapeAdded(newShape);
     }
+}
+
+bool Canvas::eventFilter(QObject* obj, QEvent* ev)
+{
+    if (obj == view && m_activeShape) {
+        if (ev->type() == QEvent::MouseButtonPress) {
+            QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(ev);
+            m_lastMousePos = mouseEvent->pos();
+            if (m_activeTool == "Move" || m_activeTool == "Rot" || m_activeTool == "Scale") {
+                return true;
+            }
+        }
+        else if (ev->type() == QEvent::MouseMove) {
+            QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(ev);
+            if (mouseEvent->buttons() & Qt::LeftButton) {
+                QPoint delta = mouseEvent->pos() - m_lastMousePos;
+                m_lastMousePos = mouseEvent->pos();
+
+                if (m_activeTool == "Move") {
+                    m_activeShape->setPositionX(m_activeShape->position().x() + delta.x() * 0.1f);
+                    m_activeShape->setPositionY(m_activeShape->position().y() - delta.y() * 0.1f);
+                    emit shapeAdded(m_activeShape);
+                    return true;
+                }
+                else if (m_activeTool == "Rot") {
+                    m_activeShape->setRotationY(m_activeShape->rotY() + delta.x());
+                    m_activeShape->setRotationX(m_activeShape->rotX() + delta.y());
+                    emit shapeAdded(m_activeShape);
+                    return true;
+                }
+                else if (m_activeTool == "Scale") {
+                    float s = m_activeShape->scale() + ((delta.y() < 0 || delta.x() > 0) ? 0.05f : -0.05f);
+                    if (s < 0.1f) s = 0.1f;
+                    m_activeShape->setScale(s);
+                    emit shapeAdded(m_activeShape);
+                    return true;
+                }
+            }
+        }
+    }
+    return QWidget::eventFilter(obj, ev);
 }
 
 
