@@ -94,6 +94,9 @@ PropertyPanel::PropertyPanel(QWidget* parent) : QWidget(parent) {
     connect(visibleBtn, &QPushButton::toggled,
         this, &PropertyPanel::onVisibilityToggled);
 
+    connect(lockedBtn, &QPushButton::toggled,
+        this, &PropertyPanel::onLockedToggled);
+
 }
 
 void PropertyPanel::loadShape(BaseShape* shape)
@@ -120,6 +123,9 @@ void PropertyPanel::loadShape(BaseShape* shape)
     RposX->setValue(shape->rotX());
     RposY->setValue(shape->rotY());
     RposZ->setValue(shape->rotZ());
+
+    setControlsEnabled(!lockedBtn->isChecked());
+
 }
 
 void PropertyPanel::onPosXChanged(double v)
@@ -174,4 +180,27 @@ void PropertyPanel::onVisibilityToggled(bool checked)
 {
     if (currentShape)
         currentShape->setVisible(checked);
+}
+void PropertyPanel::onLockedToggled(bool checked)
+{
+    setControlsEnabled(!checked);  // disable controls when locked
+
+    // Update button appearance to give visual feedback
+    if (checked)
+        lockedBtn->setText("🔒 Locked");
+    else
+        lockedBtn->setText("Unlocked");
+}
+
+void PropertyPanel::setControlsEnabled(bool enabled)
+{
+    posX->setEnabled(enabled);
+    posY->setEnabled(enabled);
+    posZ->setEnabled(enabled);
+    scaleBox->setEnabled(enabled);
+    RposX->setEnabled(enabled);
+    RposY->setEnabled(enabled);
+    RposZ->setEnabled(enabled);
+    colorCombo->setEnabled(enabled);
+    visibleBtn->setEnabled(enabled);
 }

@@ -30,6 +30,7 @@ private slots:
 
     void onColorChanged(const QString& colorName);
     void onVisibilityToggled(bool checked);
+    void onLockedToggled(bool checked);
 
 private:
     BaseShape* currentShape = nullptr;
@@ -52,6 +53,8 @@ private:
 
     QPushButton* visibleBtn;
     QPushButton* lockedBtn;
+    void setControlsEnabled(bool enabled);// helper to enable/disable all inputs
 
     QListWidget* shapeList;
+
 };
