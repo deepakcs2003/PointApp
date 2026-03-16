@@ -6,6 +6,7 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QListWidget>
+#include <QMap>
 #include "BaseShape.h"
 
 class PropertyPanel : public QWidget {
@@ -16,6 +17,7 @@ public:
 
 public slots:
     void loadShape(BaseShape* shape);
+    void onShapeAdded(BaseShape* shape);
 
 private slots:
     void onPosXChanged(double v);
@@ -30,9 +32,13 @@ private slots:
 
     void onColorChanged(const QString& colorName);
     void onVisibilityToggled(bool checked);
-    void  updateMeasurements();
+    void updateMeasurements();
+    void onShapeListItemSelected(QListWidgetItem* item);
+
 private:
     BaseShape* currentShape = nullptr;
+    QMap<QString, BaseShape*> shapeMap;  // Map to store shape pointers by name
+    int shapeCounter = 0;  // Counter to make unique shape identifiers
 
     QLabel* titleLabel;
 

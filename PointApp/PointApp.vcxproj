@@ -138,6 +138,9 @@ glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
   <ItemGroup>
     <QtMoc Include="Cyl.h" />
   </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Torus.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />

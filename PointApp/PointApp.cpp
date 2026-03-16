@@ -206,7 +206,7 @@ void PointApp::onShapeAdded(BaseShape* shape)
 {
     if (!shape) return;
 
-    propertyPanel->loadShape(shape);
+    propertyPanel->onShapeAdded(shape);
 
     statusBar()->showMessage("Shape selected : " + shape->shapeName());
 }

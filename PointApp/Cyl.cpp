@@ -12,7 +12,7 @@ Cylinder::Cylinder(Qt3DCore::QEntity* rootEntity) : BaseShape(rootEntity)
 
     m_transform = new Qt3DCore::QTransform();
     m_transform->setScale(1.0f);
-    m_transform->setTranslation(QVector3D(-6.0f, 0.0f, 0.0f));
+    m_transform->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
 
     m_material = new Qt3DExtras::QPhongMaterial();
     m_material->setDiffuse(QColor(100, 200, 150));
