@@ -109,6 +109,7 @@ glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="ToolBox.cpp" />
+    <ClCompile Include="Torus.cpp" />
     <QtRcc Include="PointApp.qrc" />
     <QtMoc Include="PointApp.h" />
     <ClCompile Include="PointApp.cpp" />
