@@ -17,13 +17,13 @@ PropertyPanel::PropertyPanel(QWidget* parent) : QWidget(parent) {
     form->addRow(shapeList);
 
 
-    scaleBox = new QDoubleSpinBox(); 
-   
+    scaleBox = new QDoubleSpinBox();
+
     posX = new QDoubleSpinBox();
-    posY = new QDoubleSpinBox(); 
+    posY = new QDoubleSpinBox();
     posZ = new QDoubleSpinBox();
 
-    RposX = new QDoubleSpinBox(); 
+    RposX = new QDoubleSpinBox();
     RposY = new QDoubleSpinBox();
     RposZ = new QDoubleSpinBox();
 
@@ -37,7 +37,7 @@ PropertyPanel::PropertyPanel(QWidget* parent) : QWidget(parent) {
 
     visibleBtn = new QPushButton("Visible");
     visibleBtn->setCheckable(true);
-    visibleBtn->setChecked(true); 
+    visibleBtn->setChecked(true);
 
     lockedBtn = new QPushButton("Locked");
     lockedBtn->setCheckable(true);
@@ -94,6 +94,8 @@ PropertyPanel::PropertyPanel(QWidget* parent) : QWidget(parent) {
     connect(visibleBtn, &QPushButton::toggled,
         this, &PropertyPanel::onVisibilityToggled);
 
+    connect(lockedBtn, &QPushButton::toggled,
+        this, &PropertyPanel::onLockedToggled);
     connect(posX, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
         this, &PropertyPanel::updateMeasurements);
 
@@ -132,6 +134,9 @@ void PropertyPanel::loadShape(BaseShape* shape)
     RposX->setValue(shape->rotX());
     RposY->setValue(shape->rotY());
     RposZ->setValue(shape->rotZ());
+
+    setControlsEnabled(!lockedBtn->isChecked());
+
     updateMeasurements();
 }
 
@@ -230,4 +235,26 @@ void PropertyPanel::onVisibilityToggled(bool checked)
     if (currentShape)
         currentShape->setVisible(checked);
 }
+void PropertyPanel::onLockedToggled(bool checked)
+{
+    setControlsEnabled(!checked);  // disable controls when locked
 
+    // Update button appearance to give visual feedback
+    if (checked)
+        lockedBtn->setText("🔒 Locked");
+    else
+        lockedBtn->setText("Unlocked");
+}
+
+void PropertyPanel::setControlsEnabled(bool enabled)
+{
+    posX->setEnabled(enabled);
+    posY->setEnabled(enabled);
+    posZ->setEnabled(enabled);
+    scaleBox->setEnabled(enabled);
+    RposX->setEnabled(enabled);
+    RposY->setEnabled(enabled);
+    RposZ->setEnabled(enabled);
+    colorCombo->setEnabled(enabled);
+    visibleBtn->setEnabled(enabled);
+}

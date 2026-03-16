@@ -33,6 +33,7 @@
     <ClCompile Include="Cyl.cpp">
       <Filter>Shapes</Filter>
     </ClCompile>
+    <ClCompile Include="Torus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="PointApp.h">
@@ -66,6 +67,7 @@
     <QtMoc Include="Cyl.h">
       <Filter>Shapes</Filter>
     </QtMoc>
+    <QtMoc Include="Torus.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="App">
