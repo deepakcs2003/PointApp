@@ -1,6 +1,9 @@
 #include "Canvas.h"
 #include <QVBoxLayout>
 #include <QScreen>
+#include <Cuboid.h>
+#include <Sphere.h>
+
 
 #include <Qt3DExtras/QForwardRenderer>
 #include <Qt3DRender/QCamera>
@@ -32,7 +35,6 @@ Canvas::Canvas(QWidget* parent) : QWidget(parent)
     view->setRootEntity(rootEntity);
 
     // cuboid initially null
-    cuboid = nullptr;
 
 
     // Camera
@@ -61,22 +63,22 @@ Canvas::~Canvas()
 
 
 
-void Canvas::showTool(QString tool)
+void Canvas::onToolSelected(QString toolName)
 {
-    if (tool == "Cuboid")
-    {
-        if (!cuboid)
-        {
-            cuboid = new Cuboid(rootEntity);
-        }
-
-        cuboid->enableCuboid(true);
+    if (shapes.contains(toolName)) {
+        BaseShape* existing = shapes[toolName];
+        existing->setVisible(true);
+        emit shapeAdded(existing);
+        return;
+   }
+    BaseShape* newShape = nullptr;
+    if (toolName == "Sphere") {
+        newShape = new Sphere(rootEntity);
     }
-    else if (tool == "Sphere") {
-        if (!sphere) {
-            sphere = new Sphere(rootEntity);
-        }
-        sphere->enableSphere(true);
+
+    if (newShape) {
+        shapes[toolName] = newShape;
+        emit shapeAdded(newShape);
     }
 }
 

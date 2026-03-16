@@ -5,28 +5,53 @@
 #include <QLabel>
 #include <QComboBox>
 #include <QPushButton>
-
-class QDoubleSpinBox;
-class QLineEdit;
-class QLabel; 
+#include <QListWidget>
+#include "BaseShape.h"
 
 class PropertyPanel : public QWidget {
     Q_OBJECT
+
 public:
     explicit PropertyPanel(QWidget* parent = nullptr);
 
-    QLabel* titleLabel; 
-    QDoubleSpinBox* scaleBox, * posX, * posY, * posZ;
-    QDoubleSpinBox* RposX, * RposY, * RposZ;
-    QLineEdit* surfaceAreaField, * volumeField;
+public slots:
+    void loadShape(BaseShape* shape);
+
+private slots:
+    void onPosXChanged(double v);
+    void onPosYChanged(double v);
+    void onPosZChanged(double v);
+
+    void onScaleChanged(double v);
+
+    void onRotXChanged(double v);
+    void onRotYChanged(double v);
+    void onRotZChanged(double v);
+
+    void onColorChanged(const QString& colorName);
+    void onVisibilityToggled(bool checked);
+
+private:
+    BaseShape* currentShape = nullptr;
+
+    QLabel* titleLabel;
+
+    QDoubleSpinBox* scaleBox;
+    QDoubleSpinBox* posX;
+    QDoubleSpinBox* posY;
+    QDoubleSpinBox* posZ;
+
+    QDoubleSpinBox* RposX;
+    QDoubleSpinBox* RposY;
+    QDoubleSpinBox* RposZ;
+
+    QLineEdit* surfaceAreaField;
+    QLineEdit* volumeField;
 
     QComboBox* colorCombo;
+
     QPushButton* visibleBtn;
     QPushButton* lockedBtn;
 
-public slots:
-    void updateName(QString name); 
-    void calculateSurfaceArea();
-    void calculateVolume();
-
+    QListWidget* shapeList;
 };

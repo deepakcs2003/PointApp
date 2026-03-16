@@ -149,11 +149,11 @@ Qt → Run qmake
 
 Planned improvements:
 
-* 3D camera controls
-* Grid system
-* Object transformation tools
-* STL / OBJ export
-* Boolean operations
-* Undo / Redo system
+1. visual operations 
+2. Undo and Redo 
+3. Properties 
+4. Lock and unlock feature 
+5. Grouping 
+6. Copy and pasting 
 
 ---

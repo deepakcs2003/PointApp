@@ -20,11 +20,12 @@
 PointApp::PointApp(QWidget *parent)
     : QMainWindow(parent)
 {
-    setWindowTitle("DPoint");
+    setWindowTitle("Sketch3D");
     resize(900, 600);
 
     createMenu();
     createLayout();
+    statusBar()->showMessage("Ready");
 }
 
 PointApp::~PointApp()
@@ -166,36 +167,49 @@ void PointApp::createMenu()
 
 void PointApp::createLayout()
 {
-
     QWidget* central = new QWidget;
     setCentralWidget(central);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout();
-    QHBoxLayout *workspaceLayout = new QHBoxLayout();
-    
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+    QHBoxLayout* workspaceLayout = new QHBoxLayout();
 
     toolBox = new ToolBox;
     canvas = new Canvas;
     propertyPanel = new PropertyPanel;
 
     workspaceLayout->addWidget(toolBox);
-    workspaceLayout->addWidget(canvas);
+    workspaceLayout->addWidget(canvas, 1);
     workspaceLayout->addWidget(propertyPanel);
-    colorBar = new ColorBar;
 
     mainLayout->addLayout(workspaceLayout);
-    //mainLayout->addWidget(colorBar);
 
     central->setLayout(mainLayout);
 
-    //connect(colorBar, &ColorBar::colorSelected, canvas, &Canvas::setColor);
-    connect(toolBox, &ToolBox::toolSelected,canvas, &Canvas::showTool);
-    connect(toolBox, &ToolBox::toolSelected, propertyPanel, &PropertyPanel::updateName);
+   
 
-    statusBar()->showMessage("Lower Bar");
+    // Tool select → Canvas ko batao
+    connect(toolBox,
+        &ToolBox::toolSelected,
+        canvas,
+        &Canvas::onToolSelected);
 
+    // Canvas ne shape create kiya
+    connect(canvas,
+        &Canvas::shapeAdded,
+        this,
+        &PointApp::onShapeAdded);
+
+    statusBar()->showMessage("Ready");
 }
 
+void PointApp::onShapeAdded(BaseShape* shape)
+{
+    if (!shape) return;
+
+    propertyPanel->loadShape(shape);
+
+    statusBar()->showMessage("Shape selected : " + shape->shapeName());
+}
 
 
 

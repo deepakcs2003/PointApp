@@ -1,9 +1,8 @@
 #pragma once
-#include <Sphere.h>
 #include <QWidget>
-#include <Cuboid.h>
 
 #include <Qt3DExtras/qt3dwindow.h>
+#include <BaseShape.h>
 
 class Canvas : public QWidget
 {
@@ -14,7 +13,10 @@ public:
     ~Canvas();
 
 public slots:
-    void showTool(QString tool);
+    void onToolSelected( QString toolName);
+
+signals:
+    void shapeAdded(BaseShape* shape);
 
 private:
 
@@ -23,7 +25,6 @@ private:
 
     Qt3DCore::QEntity* rootEntity;
 
-    Cuboid* cuboid;
-    Sphere* sphere;
+    QMap<QString, BaseShape*>shapes;
 };
 
