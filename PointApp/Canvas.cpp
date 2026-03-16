@@ -13,6 +13,7 @@
 #include "Cone.h"
 #include "Cyl.h"
 
+int Canvas::id = 0;
 Canvas::Canvas(QWidget* parent) : QWidget(parent)
 {
 
@@ -62,16 +63,22 @@ Canvas::~Canvas()
 {
 }
 
+BaseShape* Canvas::getObject(QString obj)
+{
+    if (shapes.contains(obj)) {
+        return shapes[obj];
+    }
+    else {
+        return nullptr;
+    }
+}
+
 
 
 void Canvas::onToolSelected(QString toolName)
 {
-    if (shapes.contains(toolName)) {
-        BaseShape* existing = shapes[toolName];
-        existing->setVisible(true);
-        emit shapeAdded(existing);
-        return;
-   }
+  
+
     BaseShape* newShape = nullptr;
     if (toolName == "Sphere") {
         newShape = new Sphere(rootEntity);
@@ -87,8 +94,10 @@ void Canvas::onToolSelected(QString toolName)
     {
         newShape = new Cylinder(rootEntity);
     }
+
+	QString uniqueName = toolName + QString::number(++id);
     if (newShape) {
-        shapes[toolName] = newShape;
+        shapes[uniqueName] = newShape;
         emit shapeAdded(newShape);
     }
 }

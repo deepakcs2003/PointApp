@@ -16,6 +16,6 @@ public:
 
     QString shapeName() const override;
 
-public slots:
-    void enableCylinder(bool enabled);
+//public slots:
+//    void enableCylinder(bool enabled);
 };
